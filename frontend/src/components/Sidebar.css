@@ -6,15 +6,16 @@
     height: 100vh;
     padding: 2rem 0;
     border-radius: 0;
-    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    border-right: 1px solid var(--border-color);
     display: flex;
     flex-direction: column;
     overflow-y: auto;
+    background: white;
 }
 
 .sidebar-header {
     padding: 0 1.5rem 2rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .sidebar-logo {
@@ -68,13 +69,13 @@
 }
 
 .sidebar-link:hover {
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--bg-secondary);
     color: var(--text-primary);
 }
 
 .sidebar-link.active {
-    background: rgba(79, 70, 229, 0.1);
-    color: var(--primary-light);
+    background: rgba(1, 122, 141, 0.08);
+    color: var(--primary-color);
 }
 
 .sidebar-link.active::before {

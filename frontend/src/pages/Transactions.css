@@ -1,5 +1,6 @@
 .transactions-page {
     animation: fadeIn 0.5s ease-out;
+    background: var(--bg-secondary);
 }
 
 .page-header {
@@ -13,6 +14,7 @@
     font-size: 2rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
+    color: var(--text-primary);
 }
 
 .page-header p {
@@ -27,6 +29,10 @@
 
 .transactions-section {
     padding: 1.5rem;
+    background: white;
+    border-radius: var(--border-radius-lg);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
 }
 
 .transactions-section h3 {
@@ -51,10 +57,12 @@
     background: var(--bg-secondary);
     border-radius: var(--border-radius-md);
     transition: all var(--transition-fast);
+    border: 1px solid var(--border-color);
 }
 
 .transaction-row:hover {
-    background: var(--bg-tertiary);
+    background: var(--bg-card);
+    border-color: var(--primary-color);
 }
 
 .transaction-title {
@@ -98,7 +106,7 @@
 }
 
 .btn-icon:hover {
-    background: var(--bg-tertiary);
+    background: var(--bg-secondary);
     color: var(--error-color);
 }
 
@@ -119,6 +127,9 @@
     max-width: 500px;
     padding: 2rem;
     animation: slideInRight 0.3s ease-out;
+    background: white;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-2xl);
 }
 
 .modal-content h2 {
