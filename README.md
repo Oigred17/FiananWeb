@@ -1,6 +1,6 @@
 # Guía de Inicio Rápido
 
-## 🚀 Instalación Rápida
+##  Instalación Rápida
 
 ### 1. Base de Datos
 **Windows:**
