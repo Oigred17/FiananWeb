@@ -15,7 +15,7 @@ if (-not $psqlPath) {
 }
 
 if (-not $psqlPath) {
-    Write-Host "❌ No se encontró psql.exe. Por favor asegúrate de tener PostgreSQL instalado." -ForegroundColor Red
+    Write-Host " No se encontró psql.exe. Por favor asegúrate de tener PostgreSQL instalado." -ForegroundColor Red
     exit 1
 }
 
@@ -30,10 +30,10 @@ if ($LASTEXITCODE -eq 0) {
     & $psqlPath -U postgres -f database\seed_data.sql
     
     if ($LASTEXITCODE -eq 0) {
-        Write-Host "✅ Base de datos reseteada exitosamente" -ForegroundColor Green
+        Write-Host " Base de datos reseteada exitosamente" -ForegroundColor Green
     } else {
-        Write-Host "❌ Error al ejecutar seed_data.sql" -ForegroundColor Red
+        Write-Host " Error al ejecutar seed_data.sql" -ForegroundColor Red
     }
 } else {
-    Write-Host "❌ Error al ejecutar init_database.sql" -ForegroundColor Red
+    Write-Host " Error al ejecutar init_database.sql" -ForegroundColor Red
 }
