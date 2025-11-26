@@ -10,7 +10,7 @@
 
 **Linux / Mac:**
 ```bash
-./crear.sh
+./crearbase.sh
 ```
 
 ### 2. Backend
