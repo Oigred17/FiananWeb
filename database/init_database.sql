@@ -156,13 +156,20 @@ CREATE OR REPLACE VIEW vista_balance_usuarios AS
 SELECT 
     u.id as usuario_id,
     u.username,
-    COALESCE(SUM((i.monto).cantidad), 0) as total_ingresos,
-    COALESCE(SUM((g.monto).cantidad), 0) as total_gastos,
-    COALESCE(SUM((i.monto).cantidad), 0) - COALESCE(SUM((g.monto).cantidad), 0) as balance
+    COALESCE(i.total_ingresos, 0) as total_ingresos,
+    COALESCE(g.total_gastos, 0) as total_gastos,
+    COALESCE(i.total_ingresos, 0) - COALESCE(g.total_gastos, 0) as balance
 FROM usuarios u
-LEFT JOIN ingresos i ON u.id = i.usuarioId
-LEFT JOIN gastos g ON u.id = g.usuarioId
-GROUP BY u.id, u.username;
+LEFT JOIN (
+    SELECT usuarioId, SUM((monto).cantidad) AS total_ingresos
+    FROM ingresos
+    GROUP BY usuarioId
+) i ON u.id = i.usuarioId
+LEFT JOIN (
+    SELECT usuarioId, SUM((monto).cantidad) AS total_gastos
+    FROM gastos
+    GROUP BY usuarioId
+) g ON u.id = g.usuarioId;
 
 -- Vista para obtener el estado de cada presupuesto (gastado vs límite)
 CREATE OR REPLACE VIEW vista_estado_presupuestos AS
