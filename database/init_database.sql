@@ -163,3 +163,33 @@ FROM usuarios u
 LEFT JOIN ingresos i ON u.id = i.usuarioId
 LEFT JOIN gastos g ON u.id = g.usuarioId
 GROUP BY u.id, u.username;
+
+-- Vista para obtener el estado de cada presupuesto (gastado vs límite)
+CREATE OR REPLACE VIEW vista_estado_presupuestos AS
+SELECT
+    p.id,
+    p.usuarioId,
+    p.categoriaId,
+    c.nombre AS categoria_nombre,
+    p.periodo,
+    (p.monto_max).cantidad AS limite,
+    COALESCE(s.gastado, 0) AS gastado,
+    CASE
+        WHEN COALESCE(s.gastado, 0) > (p.monto_max).cantidad THEN 'excedido'
+        WHEN COALESCE(s.gastado, 0) > (p.monto_max).cantidad * 0.8 THEN 'alerta'
+        ELSE 'normal'
+    END AS estado
+FROM presupuestos p
+JOIN categorias c ON p.categoriaId = c.id
+LEFT JOIN LATERAL (
+    SELECT SUM((g.monto).cantidad) AS gastado
+    FROM gastos g
+    WHERE g.usuarioId = p.usuarioId
+      AND g.categoriaId = p.categoriaId
+      AND g.fecha >= CASE p.periodo
+                        WHEN 'mensual' THEN EXTRACT(EPOCH FROM NOW() - INTERVAL '30 days')::BIGINT
+                        WHEN 'semanal' THEN EXTRACT(EPOCH FROM NOW() - INTERVAL '7 days')::BIGINT
+                        WHEN 'anual' THEN EXTRACT(EPOCH FROM NOW() - INTERVAL '365 days')::BIGINT
+                        ELSE 0
+                      END
+) s ON true;
